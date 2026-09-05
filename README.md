@@ -1,126 +1,182 @@
-# yaw-rescue
-“Yaw Rescue – Répare le yaw instable des joysticks (X‑Plane 11/12, FlyWithLua + Python)”
+# ✈️ Yaw Rescue
 
-================================================================================
-  YAW RESCUE - Installation / Installation
-================================================================================
+> **Fix your joystick yaw problems** — Professional signal processing for X-Plane, controllable from your smartphone.
 
-English below / Francais ci-dessous
+![Python](https://img.shields.io/badge/Python-3.7+-3776AB?style=flat&logo=python&logoColor=white)
+![X-Plane](https://img.shields.io/badge/X--Plane-11%2F12-000000?style=flat)
+![License](https://img.shields.io/badge/License-MIT-green)
 
-================================================================================
-  ENGLISH
-================================================================================
+---
 
-  FILE PLACEMENT
-  --------------
+## 🎯 The Problem
 
-  Your FlyWithLua Scripts folder must look like this:
+Many joysticks suffer from **erratic yaw behavior**:
 
-    X-Plane/Resources/plugins/FlyWithLua/Scripts/
-    +-- auto_yaw.lua                    <-- Main script (FlyWithLua)
-    +-- auto_yaw_deck.lua               <-- Bridge to Python server
-    +-- AutoYaw_profiles.cfg            <-- Created automatically
-    +-- Auto Yaw Deck/                  <-- Python server + web app
-        +-- panel.py
-        +-- server.py
-        +-- translations.lua
-        +-- start_panel.bat
-        +-- static/
-        +-- data/                       <-- Created automatically
-        +-- certs/                      <-- Created automatically
+- 🎢 Jittery potentiometers that send noise near center
+- ⚡ Rapid oscillations that make coordinated flight impossible
+- 🔄 Unpredictable rudder jumps during flight
 
-  IMPORTANT
-  ---------
+**Yaw Rescue fixes all of these** with professional-grade signal processing, controllable from your smartphone over WiFi.
 
-  1. auto_yaw.lua and auto_yaw_deck.lua MUST be directly in Scripts/
-     (FlyWithLua only loads scripts from the root Scripts/ folder)
+## ✨ Features
 
-  2. The "Auto Yaw Deck" folder MUST stay inside Scripts/
+| Feature | Description |
+|---------|-------------|
+| 📱 **Smartphone Control** | Full remote control panel from your phone — no need to alt-tab |
+| 🔧 **Signal Smoothing** | Exponential moving average to reduce input noise |
+| 🔇 **Noise Filter** | Rejects rapid joystick oscillations (potentiometer jitter) |
+| ⭕ **Dead Zone** | Ignores center jitter around the stick's neutral position |
+| 🔄 **Auto-Coordination** | Automatic yaw correction during bank turns |
+| 🛑 **Yaw Damper** | Reduces Dutch roll oscillations like an airliner autopilot |
+| 🧭 **Live Compass** | Real-time heading with return heading marker |
+| 🌐 **FR/EN** | Full bilingual support (French + English) |
+| 🔒 **100% Local** | No internet connection — your data stays on your network |
 
-  3. Do NOT move auto_yaw_deck.lua into "Auto Yaw Deck/"
+## 🚀 Quick Start
 
-  QUICK START
-  -----------
+### 1. Install
 
-  1. Copy these 3 items into Scripts/:
-     - auto_yaw.lua
-     - auto_yaw_deck.lua
-     - Auto Yaw Deck/
+Copy these **3 items** into your FlyWithLua `Scripts/` folder:
 
-  2. Start X-Plane
+```
+X-Plane/Resources/plugins/FlyWithLua/Scripts/
+├── auto_yaw.lua              ← Main script
+├── auto_yaw_deck.lua         ← Bridge to Python server
+└── Auto Yaw Deck/            ← Python server + web app
+```
 
-  3. Double-click "Auto Yaw Deck/start_panel.bat"
+### 2. Start
 
-  4. Scan the QR code with your phone
+```
+Double-click Auto Yaw Deck/start_panel.bat
+```
 
-  5. Accept the SSL certificate warning
+### 3. Connect
 
-  6. Done! Adjust settings from your smartphone.
+1. 📱 Scan the QR code with your phone
+2. ✅ Accept the SSL certificate warning
+3. 🎮 Done! Adjust settings from your smartphone
 
-  TROUBLESHOOTING
-  ---------------
+> ⚠️ **Important:** `auto_yaw.lua` and `auto_yaw_deck.lua` must be **directly** in `Scripts/` (not inside the `Auto Yaw Deck/` subfolder). FlyWithLua only loads scripts from the root folder.
 
-  - Script not loading: check Files are in Scripts/ root, not in subfolder
-  - Server won't start: python --version (needs 3.7+), packages auto-install
-  - Phone can't connect: same WiFi, accept SSL, or install CA cert
+## 📂 File Structure
 
-================================================================================
-  FRANCAIS
-================================================================================
+```
+Scripts/
+├── auto_yaw.lua              ← Main script (FlyWithLua)
+├── auto_yaw_deck.lua         ← Bridge to Python server
+├── AutoYaw_profiles.cfg      ← Settings (auto-created)
+├── README.txt                ← This file
+└── Auto Yaw Deck/
+    ├── panel.py              ← GUI control panel
+    ├── server.py             ← HTTPS server
+    ├── translations.lua      ← FlyWithLua UI translations
+    ├── start_panel.bat       ← Windows launcher
+    ├── static/
+    │   ├── index.html        ← Web interface
+    │   ├── style.css         ← Dark aviation theme
+    │   ├── app.js            ← Client logic + translations
+    │   ├── info.js           ← Config info panels
+    │   └── readme.js         ← User manual content
+    ├── data/                 ← Auto-created
+    │   ├── state.txt         ← Lua → Python
+    │   └── commands.txt      ← Python → Lua
+    └── certs/                ← Auto-created
+        ├── server.pem        ← SSL certificate
+        └── server.key        ← SSL private key
+```
 
-  PLACEMENT DES FICHIERS
-  ----------------------
+## 🎛️ How It Works
 
-  Votre dossier Scripts de FlyWithLua doit ressembler a ceci :
+```
+┌─────────────┐    state.txt     ┌──────────────┐    HTTPS    ┌─────────────┐
+│  X-Plane    │ <=============== │ Python Server │ <=========> │  Smartphone │
+│  (Lua FWL)  │    commands.txt  │  (port 8443)  │   QR code   │  (browser)  │
+└─────────────┘                  └──────────────┘             └─────────────┘
+```
 
-    X-Plane/Resources/plugins/FlyWithLua/Scripts/
-    +-- auto_yaw.lua                    <-- Script principal (FlyWithLua)
-    +-- auto_yaw_deck.lua               <-- Pont vers le serveur Python
-    +-- AutoYaw_profiles.cfg            <-- Cree automatiquement
-    +-- Auto Yaw Deck/                  <-- Serveur Python + application web
-        +-- panel.py
-        +-- server.py
-        +-- translations.lua
-        +-- start_panel.bat
-        +-- static/
-        +-- data/                       <-- Cree automatiquement
-        +-- certs/                      <-- Cree automatiquement
+1. **Lua bridge** reads X-Plane datarefs and writes to `state.txt`
+2. **Python server** reads state and serves via REST API (HTTPS)
+3. **Smartphone** displays live data and sends commands
+4. **Lua bridge** reads commands and applies them to X-Plane
 
-  IMPORTANT
-  ---------
+## 🎮 Trim System
 
-  1. auto_yaw.lua et auto_yaw_deck.lua DOIVENT etre directement dans Scripts/
-     (FlyWithLua ne charge que les scripts a la racine de Scripts/)
+Traditional X-Plane trim datarefs only work on aircraft with physical trim tabs. **Yaw Rescue** applies trim as **direct offsets** to the joystick override:
 
-  2. Le dossier "Auto Yaw Deck" DOIT rester dans Scripts/
+```
+pitch_output = raw_pitch + elevator_trim
+roll_output  = raw_roll  + aileron_trim
+yaw_output   = yaw_auto  + rudder_trim
+```
 
-  3. NE deplacez PAS auto_yaw_deck.lua dans "Auto Yaw Deck/"
+**This works on ALL aircraft**, even those without aileron or rudder trim tabs.
 
-  DEMARRAGE RAPIDE
-  ----------------
+## 🧭 Return Heading
 
-  1. Copiez ces 3 elements dans Scripts/ :
-     - auto_yaw.lua
-     - auto_yaw_deck.lua
-     - Auto Yaw Deck/
+The compass includes a **return heading** feature:
 
-  2. Demarrez X-Plane
+1. Press "Return heading" to freeze the current heading
+2. A yellow arrow appears at the **reciprocal direction** (180°)
+3. Follow the arrow to return to your departure airport
+4. Auto-resets when a new aircraft is loaded
 
-  3. Double-cliquez sur "Auto Yaw Deck/start_panel.bat"
+## 📱 Mobile Interface
 
-  4. Scannez le QR code avec votre telephone
+Three tabs in the web interface:
 
-  5. Acceptez l'avertissement du certificat SSL
+### ⚙️ Config
+- Signal smoothing factor
+- Noise filter threshold
+- Dead zone size
+- Auto-coordination gain
+- Yaw damper gain + sensitivity
+- All toggles (enable/disable each feature)
 
-  6. C'est fait ! Ajustez les parametres depuis votre smartphone.
+### 🎛️ Controls
+- Live compass with rotating rose
+- Return heading marker
+- Trim sliders (pitch, roll, yaw)
+- Flap position slider + presets
 
-  DEPANNAGE
-  ---------
+### 📡 Telemetry
+- Heading, altitude, airspeed, bank
+- Auto-Yaw internal state (raw, smoothed, output)
+- Active profile name
+- Detected aircraft
 
-  - Script ne se charge pas : verifiez que les fichiers sont a la racine de Scripts/
-  - Serveur ne demarre pas : python --version (besoin de 3.7+), les packages s'installent auto
-  - Telephone ne se connecte pas : meme WiFi, acceptez le SSL, ou installez le certificat CA
+## 🔒 Security
 
-================================================================================
+- **100% local** — no data sent to the internet
+- **Self-signed SSL** certificate for encrypted communication
+- **Server listens only** on your local network (LAN)
+- **Commands validated** by Lua bridge before application
+- Certificate **auto-expires** after 365 days
 
+## 🛠️ Troubleshooting
 
+| Problem | Solution |
+|---------|----------|
+| Script not loading | Check files are in `Scripts/` root, not in subfolder |
+| Server won't start | Run `python --version` (needs 3.7+), packages auto-install |
+| Phone can't connect | Same WiFi network, accept SSL warning |
+| Samsung blocks cert | Install CA cert from `http://PC_IP:8080/cert` |
+| No data showing | Check `auto_yaw_deck.lua` is loaded in FlyWithLua |
+| Sliders flicker | Fixed in latest version — update all files |
+
+## 📋 Requirements
+
+- **Python 3.7+** (with tkinter for GUI panel)
+- **X-Plane 11/12** with FlyWithLua NXT
+- **Same WiFi network** for PC and smartphone
+- Python packages are **auto-installed** on first run
+
+## 📄 License
+
+MIT License — free to use and modify.
+
+---
+
+<p align="center">
+  Made with ❤️ for X-Plane pilots
+</p>
