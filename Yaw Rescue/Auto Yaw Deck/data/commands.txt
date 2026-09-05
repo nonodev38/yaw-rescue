@@ -1,0 +1,2 @@
+set aileron_trim 0.69
+set auto_coord_gain 0.9
