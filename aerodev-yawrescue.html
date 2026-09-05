@@ -1,104 +1,587 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>Yaw Rescue – Répare le Yaw de ton Joystick</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>
-    body { background:#0b0f16; color:#e0e6f0; font-family:system-ui, sans-serif; margin:0; }
-    header { padding:20px; border-bottom:1px solid #222; background:#111827; }
-    h1 { margin:0; font-size:1.8rem; color:#4ade80; }
-    h2 { margin-top:2rem; color:#93c5fd; }
-    .tagline { margin-top:8px; color:#9ca3af; }
-    .devbrand { margin-top:4px; font-size:0.9rem; color:#6ee7b7; font-style:italic; }
-    main { max-width:960px; margin:0 auto; padding:20px; }
-    section { margin-bottom:32px; }
-    .btn-row { margin-top:16px; display:flex; flex-wrap:wrap; gap:10px; }
-    .btn {
-      display:inline-block; padding:10px 18px; border-radius:6px;
-      text-decoration:none; font-weight:600; font-size:0.95rem;
+<meta charset="UTF-8">
+<title>Yaw Rescue – AeroDev Systems</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Yaw Rescue corrige le yaw instable des joysticks pour X-Plane 11/12, piloté depuis un smartphone en WiFi.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg-deep:#0a121c;
+    --bg-panel:#0e1a28;
+    --bg-panel-raised:#122234;
+    --line:#1e3348;
+    --line-soft:#16283a;
+    --teal:#22b8a6;
+    --teal-bright:#3fd9c4;
+    --teal-dim:#2a8f83;
+    --ink:#eaf1f6;
+    --muted:#a7b4c4;
+    --muted-dim:#8c9bb0;
+    --radius:6px;
+  }
+
+  *{ box-sizing:border-box; }
+
+  html{ scroll-behavior:smooth; }
+
+  body{
+    margin:0;
+    font-family:'Inter', system-ui, sans-serif;
+    background:linear-gradient(180deg, var(--bg-deep) 0%, #0b1520 100%);
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .grid-bg{
+    background-image:
+      linear-gradient(var(--line-soft) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
+    background-size:40px 40px;
+    -webkit-mask-image:linear-gradient(180deg, rgba(0,0,0,0.5), transparent 70%);
+            mask-image:linear-gradient(180deg, rgba(0,0,0,0.5), transparent 70%);
+  }
+
+  a{ color:inherit; }
+
+  :focus-visible{
+    outline:2px solid var(--teal-bright);
+    outline-offset:3px;
+  }
+
+  h1,h2,h3{
+    font-family:'Space Grotesk', 'Inter', sans-serif;
+    letter-spacing:-0.01em;
+  }
+
+  .wrap{
+    max-width:1080px;
+    margin:0 auto;
+    padding:0 28px;
+  }
+
+  /* ---------- masthead ---------- */
+  .masthead{
+    position:relative;
+    z-index:10;
+    border-bottom:1px solid var(--line);
+    background:linear-gradient(180deg, #13233a 0%, #0d1826 100%);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,0.05), 0 12px 28px rgba(0,0,0,0.35);
+  }
+  .masthead-inner{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:22px 28px;
+    max-width:1080px;
+    margin:0 auto;
+  }
+  .masthead img{
+    height:140px; /* LOGO 2x PLUS GRAND */
+    width:auto;
+    display:block;
+    filter:drop-shadow(0 6px 12px rgba(0,0,0,0.5)) drop-shadow(0 0 8px rgba(34,184,166,0.28));
+  }
+  .masthead nav{
+    display:flex;
+    gap:24px;
+    align-items:center;
+    color:var(--ink);
+  }
+  .masthead nav a{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    text-decoration:none;
+    color:var(--ink);
+    font-size:0.95rem;
+    font-weight:600;
+    background:var(--bg-panel-raised);
+    border:1px solid var(--line);
+    border-radius:999px;
+    padding:10px 18px;
+    transition:background .15s ease, border-color .15s ease, color .15s ease, transform .15s ease, box-shadow .15s ease;
+  }
+  .masthead nav a:hover{
+    color:#04241f;
+    background:var(--teal-bright);
+    border-color:var(--teal-bright);
+    transform:translateY(-1px);
+    box-shadow:0 6px 16px rgba(34,184,166,0.28);
+  }
+
+  /* ---------- support button in header ---------- */
+  .masthead .btn-primary{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    text-decoration:none;
+    font-size:0.95rem;
+    font-weight:600;
+    padding:10px 18px;
+    border-radius:999px;
+    background:var(--teal);
+    color:#04241f;
+    border:1px solid var(--teal);
+    box-shadow:0 4px 12px rgba(34,184,166,0.25);
+    transition:background .15s ease, border-color .15s ease, transform .15s ease;
+    animation:btn-pulse 2.4s ease-in-out infinite;
+  }
+  .masthead .btn-primary:hover{
+    background:var(--teal-bright);
+    border-color:var(--teal-bright);
+    transform:translateY(-1px);
+    animation-play-state:paused;
+  }
+  .masthead .btn-primary:active{
+    transform:translateY(0);
+  }
+
+  @keyframes btn-pulse{
+    0%, 100%{
+      box-shadow:0 4px 12px rgba(34,184,166,0.25), 0 0 0 0 rgba(34,184,166,0.45);
     }
-    .btn-primary { background:#4ade80; color:#052e16; }
-    .btn-secondary { background:#1f2937; color:#e5e7eb; border:1px solid #374151; }
-    .pill { display:inline-block; padding:4px 10px; border-radius:999px;
-      background:#111827; border:1px solid #1f2937; font-size:0.8rem; margin-right:6px;
+    50%{
+      box-shadow:0 4px 16px rgba(34,184,166,0.45), 0 0 0 9px rgba(34,184,166,0);
     }
-    ul { margin-left:20px; }
-    code { background:#111827; padding:2px 4px; border-radius:4px; }
-    footer { padding:20px; text-align:center; font-size:0.8rem; color:#6b7280; border-top:1px solid #1f2937; margin-top:20px; }
-  </style>
+  }
+
+  @media (max-width:640px){
+    .masthead-inner{
+      flex-wrap:wrap;
+      gap:14px;
+      justify-content:center;
+      text-align:center;
+    }
+  }
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;
+    padding:64px 0 56px;
+    overflow:hidden;
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns:1.05fr 0.95fr;
+    gap:48px;
+    align-items:center;
+    position:relative;
+  }
+  .hero h1{
+    font-size:clamp(2.2rem, 4vw, 3rem);
+    line-height:1.05;
+    margin:0 0 18px;
+    color:var(--ink);
+  }
+  .hero .tagline{
+    font-size:1.1rem;
+    line-height:1.6;
+    color:var(--muted);
+    max-width:46ch;
+    margin:0 0 26px;
+  }
+
+  .tag-row{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:0;
+    margin-bottom:34px;
+    font-size:0.9rem;
+    color:var(--muted-dim);
+  }
+  .tag-row span{
+    padding:0 14px 0 0;
+    margin-right:14px;
+    border-right:1px solid var(--line);
+  }
+  .tag-row span:last-child{
+    border-right:none;
+  }
+
+  .btn-row{
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+  }
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:12px 22px;
+    border-radius:var(--radius);
+    text-decoration:none;
+    font-weight:600;
+    font-size:0.98rem;
+    font-family:'Inter', sans-serif;
+    transition:transform .15s ease, background .15s ease, border-color .15s ease;
+  }
+  .btn-secondary{
+    background:transparent;
+    color:var(--ink);
+    border:1px solid var(--line);
+  }
+  .btn-secondary:hover{
+    border-color:var(--teal-dim);
+    color:var(--teal-bright);
+  }
+
+  /* HUD panel */
+  .hud{
+    position:relative;
+    border:1px solid var(--line);
+    background:var(--bg-panel);
+    border-radius:8px;
+    padding:22px 22px 18px;
+  }
+  .hud::before, .hud::after{
+    content:"";
+    position:absolute;
+    width:16px;
+    height:16px;
+    border:1.5px solid var(--teal-dim);
+  }
+  .hud::before{
+    top:-1px; left:-1px;
+    border-right:none; border-bottom:none;
+  }
+  .hud::after{
+    bottom:-1px; right:-1px;
+    border-left:none; border-top:none;
+  }
+  .hud-label{
+    display:flex;
+    justify-content:space-between;
+    font-size:0.78rem;
+    color:var(--muted-dim);
+    margin-bottom:10px;
+  }
+  .hud svg{ display:block; width:100%; height:auto; }
+
+  .hud-caption{
+    display:flex;
+    justify-content:space-between;
+    font-size:0.78rem;
+    color:var(--muted-dim);
+    margin-top:10px;
+    padding-top:10px;
+    border-top:1px solid var(--line-soft);
+  }
+  .hud-caption b{ color:var(--teal-bright); font-weight:600; }
+
+  .chart-line-raw{
+    stroke:#d9a949;
+    opacity:0.8;
+  }
+  .chart-line-fixed{
+    stroke:var(--teal-bright);
+    stroke-dasharray:600;
+    stroke-dashoffset:600;
+    animation:draw 1.6s ease forwards .3s;
+  }
+  @keyframes draw{ to{ stroke-dashoffset:0; } }
+
+  main{
+    max-width:1080px;
+    margin:0 auto;
+    padding:0 28px 40px;
+  }
+
+  section{
+    padding:48px 0;
+    border-top:1px solid var(--line);
+  }
+  section h2{
+    font-size:1.5rem;
+    margin:0 0 8px;
+    color:var(--ink);
+  }
+  section h2 .rule{
+    display:block;
+    width:44px;
+    height:2px;
+    background:var(--teal);
+    margin-top:14px;
+    margin-bottom:22px;
+  }
+  section > p.lead{
+    color:var(--muted);
+    max-width:64ch;
+    line-height:1.65;
+    margin:0 0 8px;
+  }
+
+  /* table */
+  .spec-table{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    margin-top:28px;
+    border:1px solid var(--line);
+    border-radius:8px;
+    overflow:hidden;
+  }
+  .col-head{
+    padding:12px 20px;
+    font-size:0.82rem;
+    color:var(--muted-dim);
+    background:var(--bg-panel);
+    border-bottom:1px solid var(--line);
+  }
+  .col-head.right{ border-left:1px solid var(--line); }
+  .spec-cell{
+    padding:14px 20px;
+    font-size:0.95rem;
+    line-height:1.5;
+    border-top:1px solid var(--line-soft);
+  }
+  .spec-cell.symptom{ color:var(--muted); }
+  .spec-cell.fix{
+    color:var(--ink);
+    border-left:1px solid var(--line-soft);
+  }
+  .spec-cell.fix b{ color:var(--teal-bright); font-weight:600; }
+
+  /* features */
+  .feature-list{
+    margin-top:28px;
+    border-top:1px solid var(--line-soft);
+  }
+  .feature-row{
+    display:grid;
+    grid-template-columns:220px 1fr;
+    gap:24px;
+    padding:18px 0;
+    border-bottom:1px solid var(--line-soft);
+  }
+  .feature-row dt{
+    font-weight:600;
+    font-family:'Space Grotesk', sans-serif;
+    color:var(--teal-bright);
+    font-size:0.98rem;
+  }
+  .feature-row dd{
+    margin:0;
+    color:var(--muted);
+    line-height:1.6;
+  }
+
+  /* steps */
+  .steps{
+    margin-top:30px;
+    list-style:none;
+    padding:0;
+    position:relative;
+  }
+  .steps::before{
+    content:"";
+    position:absolute;
+    left:15px;
+    top:6px;
+    bottom:6px;
+    width:1px;
+    background:var(--line);
+  }
+  .steps li{
+    position:relative;
+    padding:0 0 28px 52px;
+  }
+  .steps .num{
+    position:absolute;
+    left:0; top:-2px;
+    width:32px; height:32px;
+    border:1px solid var(--teal-dim);
+    border-radius:50%;
+    background:var(--bg-panel);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:'Space Grotesk', sans-serif;
+    font-size:0.85rem;
+    color:var(--teal-bright);
+  }
+
+  /* support */
+  .support-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:24px;
+    flex-wrap:wrap;
+    margin-top:20px;
+  }
+
+  footer{
+    border-top:1px solid var(--line);
+    padding:26px 28px 40px;
+    max-width:1080px;
+    margin:0 auto;
+  }
+  footer p{
+    font-size:0.85rem;
+    color:var(--muted-dim);
+    margin:0;
+  }
+
+</style>
 </head>
+
 <body>
-<header>
-  <h1>Yaw Rescue</h1>
-  <p class="tagline">Répare le yaw instable de ton joystick – depuis ton smartphone, en WiFi.</p>
-  <p class="devbrand">Développé par AeroDev Systems</p>
-  <div class="btn-row">
-    <a href="https://github.com/nonodev38/yaw-rescue" class="btn btn-secondary">Voir sur GitHub</a>
-    <a href="https://buymeacoffee.com/aerodevsystems" class="btn btn-primary">☕ Soutenir Yaw Rescue</a>
+
+<!-- HEADER -->
+<div class="masthead">
+  <div class="masthead-inner">
+    <img src="logo.png" alt="AeroDev Systems">
+    <nav>
+      <a href="https://github.com/nonodev38/yaw-rescue">
+        <svg viewBox="0 0 16 16" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+        GitHub
+      </a>
+      <a href="https://buymeacoffee.com/aerodevsystems" class="btn-primary">
+        ☕ Soutenir Yaw Rescue
+      </a>
+    </nav>
   </div>
-</header>
+</div>
+
+<!-- HERO -->
+<div class="hero grid-bg">
+  <div class="wrap hero-grid">
+    <div>
+      <h1>Yaw Rescue</h1>
+      <p class="tagline">Corrige le yaw instable de ton joystick, en temps réel, piloté depuis ton smartphone en WiFi.</p>
+
+      <div class="tag-row">
+        <span>X-Plane 11 / 12</span>
+        <span>FlyWithLua NXT</span>
+        <span>Python 3 + HTTPS</span>
+        <span>Interface mobile</span>
+      </div>
+
+      <div class="btn-row">
+        <a href="https://github.com/nonodev38/yaw-rescue" class="btn btn-secondary">Voir sur GitHub</a>
+      </div>
+    </div>
+
+    <div class="hud">
+      <div class="hud-label">
+        <span>Canal yaw — entrée capteur</span>
+        <span>temps réel</span>
+      </div>
+      <svg viewBox="0 0 400 160" preserveAspectRatio="none">
+        <path class="chart-line-raw" d="M0,80 L15,60 L28,95 L40,55 L55,100 L68,62 L82,92 L95,58 L110,88 L125,66 L138,84 L152,70 L165,80"
+              fill="none" stroke-width="1.5"/>
+        <path class="chart-line-fixed" d="M165,80 C 200,80 220,80 400,80"
+              fill="none" stroke-width="2.5"/>
+        <line x1="165" y1="20" x2="165" y2="140" stroke="#22384c" stroke-width="1" stroke-dasharray="3 4"/>
+      </svg>
+      <div class="hud-caption">
+        <span>Signal brut</span>
+        <b>Sortie Yaw Rescue</b>
+      </div>
+    </div>
+  </div>
+</div>
+
 <main>
 
 <section>
-  <h2>Pourquoi Yaw Rescue existe</h2>
-  <p>Beaucoup de joysticks souffrent d’un yaw erratique : jitter, bruit au centre, oscillations imprévisibles. Yaw Rescue corrige ces défauts avec un traitement de signal professionnel, pilotable depuis ton smartphone en WiFi.</p>
-  <div>
-    <span class="pill">X‑Plane 11/12</span>
-    <span class="pill">FlyWithLua NXT</span>
-    <span class="pill">Python 3 + HTTPS</span>
-    <span class="pill">Interface mobile</span>
+  <h2>Pourquoi Yaw Rescue existe<span class="rule"></span></h2>
+  <p class="lead">Beaucoup de joysticks souffrent d'un yaw erratique : jitter, bruit au centre, oscillations imprévisibles causées par des potentiomètres usés. Yaw Rescue applique un traitement de signal pensé pour le vol, piloté depuis un smartphone en WiFi, sans rien installer côté téléphone.</p>
+</section>
+
+<section>
+  <h2>Ce que Yaw Rescue corrige<span class="rule"></span></h2>
+  <div class="spec-table">
+    <div class="col-head">Symptôme observé</div>
+    <div class="col-head right">Traitement appliqué</div>
+
+    <div class="spec-cell symptom">Mouvements de gouvernail erratiques</div>
+    <div class="spec-cell fix"><b>Lissage</b> du signal en continu</div>
+
+    <div class="spec-cell symptom">Oscillations rapides (jitter) dues à l'usure</div>
+    <div class="spec-cell fix"><b>Filtre anti-bruit</b> adaptatif</div>
+
+    <div class="spec-cell symptom">Dérive et bruit au centre du manche</div>
+    <div class="spec-cell fix"><b>Zone morte</b> centrale ajustable</div>
+
+    <div class="spec-cell symptom">Virages mal coordonnés</div>
+    <div class="spec-cell fix"><b>Auto-coordination</b> du palonnier</div>
+
+    <div class="spec-cell symptom">Sauts de yaw imprévisibles en vol</div>
+    <div class="spec-cell fix"><b>Yaw damper</b> logiciel</div>
   </div>
 </section>
 
 <section>
-  <h2>Le problème que Yaw Rescue répare</h2>
-  <p>Les joysticks milieu de gamme ont souvent un axe de yaw bruyant qui provoque :</p>
-  <ul>
-    <li>Mouvements de gouvernail erratiques</li>
-    <li>Oscillations rapides (“jitter”) dues aux potentiomètres usés</li>
-    <li>Sauts de yaw imprévisibles en vol</li>
-  </ul>
-  <p>Yaw Rescue applique :</p>
-  <ul>
-    <li>Lissage du signal</li>
-    <li>Filtre anti‑bruit</li>
-    <li>Zone morte centrale</li>
-    <li>Auto‑coordination</li>
-    <li>Yaw damper</li>
-  </ul>
+  <h2>Fonctionnalités<span class="rule"></span></h2>
+  <dl class="feature-list">
+    <div class="feature-row">
+      <dt>Interface mobile</dt>
+      <dd>Pilote les réglages depuis ton smartphone ou ta tablette, sans quitter le siège pilote.</dd>
+    </div>
+    <div class="feature-row">
+      <dt>Trim universel</dt>
+      <dd>Ajuste le pitch, le roll et le yaw depuis un seul panneau, avec retour en temps réel.</dd>
+    </div>
+    <div class="feature-row">
+      <dt>Contrôle des volets</dt>
+      <dd>Gère la position des volets directement depuis l'interface, sans repasser par le cockpit physique.</dd>
+    </div>
+    <div class="feature-row">
+      <dt>Profils par avion</dt>
+      <dd>Enregistre un réglage par appareil et recharge-le automatiquement au prochain vol.</dd>
+    </div>
+    <div class="feature-row">
+      <dt>Connexion HTTPS + QR code</dt>
+      <dd>Connecte le téléphone en scannant un QR code, sur ton réseau local uniquement.</dd>
+    </div>
+  </dl>
 </section>
 
 <section>
-  <h2>Fonctionnalités</h2>
-  <ul>
-    <li>Interface mobile (smartphone/tablette)</li>
-    <li>Trim universel pitch/roll/yaw</li>
-    <li>Contrôle des volets</li>
-    <li>Profils par avion</li>
-    <li>HTTPS + QR code</li>
-  </ul>
-</section>
-
-<section>
-  <h2>Installation</h2>
-  <ol>
-    <li>Copier le dossier <code>Yaw Rescue</code> dans FlyWithLua</li>
-    <li>Placer <code>yaw_rescue.lua</code> dans Scripts/</li>
-    <li>Lancer <code>start_panel.bat</code></li>
-    <li>Scanner le QR code</li>
+  <h2>Installation<span class="rule"></span></h2>
+  <ol class="steps">
+    <li>
+      <span class="num">1</span>
+      <div class="step-title">Copier le dossier du plugin</div>
+      <p>Place le dossier <code>Yaw Rescue</code> dans ton répertoire FlyWithLua.</p>
+    </li>
+    <li>
+      <span class="num">2</span>
+      <div class="step-title">Ajouter le script</div>
+      <p>Copie <code>yaw_rescue.lua</code> dans le dossier <code>Scripts/</code>.</p>
+    </li>
+    <li>
+      <span class="num">3</span>
+      <div class="step-title">Lancer le panneau de contrôle</div>
+      <p>Exécute <code>start_panel.bat</code> pour démarrer le serveur local.</p>
+    </li>
+    <li>
+      <span class="num">4</span>
+      <div class="step-title">Connecter le smartphone</div>
+      <p>Scanne le QR code affiché pour ouvrir l'interface mobile sur ton réseau.</p>
+    </li>
   </ol>
 </section>
 
 <section>
-  <h2>Soutenir Yaw Rescue</h2>
-  <p>Si Yaw Rescue améliore ton joystick, tu peux soutenir le développement :</p>
-  <a href="https://buymeacoffee.com/aerodevsystems" class="btn btn-primary">☕ Offrir un café</a>
+  <h2>Soutenir Yaw Rescue<span class="rule"></span></h2>
+  <div class="support-row">
+    <p class="lead" style="margin:0;">Si Yaw Rescue a réparé ton joystick, un café aide à financer les prochaines versions.</p>
+    <a href="https://buymeacoffee.com/aerodevsystems" class="btn btn-primary">Offrir un café</a>
+  </div>
 </section>
 
 </main>
+
 <footer>
-  Yaw Rescue – développé par AeroDev Systems pour X‑Plane 11/12. Tout reste sur ton réseau local.
+  <p>Yaw Rescue — développé par AeroDev Systems pour X-Plane 11/12. Tout reste sur ton réseau local.</p>
 </footer>
+
 </body>
 </html>
