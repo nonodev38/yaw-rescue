@@ -2,9 +2,9 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>Yaw Rescue – AeroDev Systems</title>
+<title data-i18n="docTitle">Yaw Rescue – AeroDev Systems</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Yaw Rescue corrige le yaw instable des joysticks pour X-Plane 11/12, piloté depuis un smartphone en WiFi.">
+<meta name="description" data-i18n="metaDesc" data-i18n-attr="content" content="Yaw Rescue corrige le yaw instable des joysticks pour X-Plane 11/12, piloté depuis un smartphone en WiFi.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -114,6 +114,42 @@
     box-shadow:0 6px 16px rgba(34,184,166,0.28);
   }
 
+  /* ---------- header actions: nav + language toggle ---------- */
+  .masthead-actions{
+    display:flex;
+    align-items:center;
+    gap:18px;
+  }
+  .lang-toggle{
+    display:flex;
+    align-items:center;
+    border:1px solid var(--line);
+    background:var(--bg-panel);
+    border-radius:999px;
+    padding:3px;
+  }
+  .lang-btn{
+    appearance:none;
+    -webkit-appearance:none;
+    border:none;
+    background:transparent;
+    color:var(--muted);
+    font-family:'Inter', sans-serif;
+    font-size:0.8rem;
+    font-weight:700;
+    letter-spacing:0.05em;
+    line-height:1;
+    padding:6px 11px;
+    border-radius:999px;
+    cursor:pointer;
+    transition:background .15s ease, color .15s ease;
+  }
+  .lang-btn:hover{ color:var(--ink); }
+  .lang-btn.active{
+    background:var(--teal);
+    color:#04241f;
+  }
+
   /* ---------- support button in header ---------- */
   .masthead .btn-primary{
     display:inline-flex;
@@ -156,6 +192,11 @@
       gap:14px;
       justify-content:center;
       text-align:center;
+    }
+    .masthead-actions{
+      flex-wrap:wrap;
+      justify-content:center;
+      gap:14px;
     }
   }
 
@@ -436,15 +477,21 @@
 <div class="masthead">
   <div class="masthead-inner">
     <img src="logo.png" alt="AeroDev Systems">
+    <div class="masthead-actions">
     <nav>
       <a href="https://github.com/nonodev38/yaw-rescue">
         <svg viewBox="0 0 16 16" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
         GitHub
       </a>
-      <a href="https://buymeacoffee.com/aerodevsystems" class="btn-primary">
+      <a href="https://buymeacoffee.com/aerodevsystems" class="btn-primary" data-i18n="navSupport">
         ☕ Soutenir Yaw Rescue
       </a>
     </nav>
+    <div class="lang-toggle" role="group" aria-label="Langue / Language">
+      <button type="button" class="lang-btn active" data-lang="fr" aria-pressed="true">FR</button>
+      <button type="button" class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
+    </div>
+    </div>
   </div>
 </div>
 
@@ -453,24 +500,24 @@
   <div class="wrap hero-grid">
     <div>
       <h1>Yaw Rescue</h1>
-      <p class="tagline">Corrige le yaw instable de ton joystick, en temps réel, piloté depuis ton smartphone en WiFi.</p>
+      <p class="tagline" data-i18n="tagline">Corrige le yaw instable de ton joystick, en temps réel, piloté depuis ton smartphone en WiFi.</p>
 
       <div class="tag-row">
-        <span>X-Plane 11 / 12</span>
-        <span>FlyWithLua NXT</span>
-        <span>Python 3 + HTTPS</span>
-        <span>Interface mobile</span>
+        <span data-i18n="tag1">X-Plane 11 / 12</span>
+        <span data-i18n="tag2">FlyWithLua NXT</span>
+        <span data-i18n="tag3">Python 3 + HTTPS</span>
+        <span data-i18n="tag4">Interface mobile</span>
       </div>
 
       <div class="btn-row">
-        <a href="https://github.com/nonodev38/yaw-rescue" class="btn btn-secondary">Voir sur GitHub</a>
+        <a href="https://github.com/nonodev38/yaw-rescue" class="btn btn-secondary" data-i18n="viewGitHub">Voir sur GitHub</a>
       </div>
     </div>
 
     <div class="hud">
       <div class="hud-label">
-        <span>Canal yaw — entrée capteur</span>
-        <span>temps réel</span>
+        <span data-i18n="hudChannel">Canal yaw — entrée capteur</span>
+        <span data-i18n="hudRealtime">temps réel</span>
       </div>
       <svg viewBox="0 0 400 160" preserveAspectRatio="none">
         <path class="chart-line-raw" d="M0,80 L15,60 L28,95 L40,55 L55,100 L68,62 L82,92 L95,58 L110,88 L125,66 L138,84 L152,70 L165,80"
@@ -480,8 +527,8 @@
         <line x1="165" y1="20" x2="165" y2="140" stroke="#22384c" stroke-width="1" stroke-dasharray="3 4"/>
       </svg>
       <div class="hud-caption">
-        <span>Signal brut</span>
-        <b>Sortie Yaw Rescue</b>
+        <span data-i18n="hudRaw">Signal brut</span>
+        <b data-i18n="hudOutput">Sortie Yaw Rescue</b>
       </div>
     </div>
   </div>
@@ -490,98 +537,258 @@
 <main>
 
 <section>
-  <h2>Pourquoi Yaw Rescue existe<span class="rule"></span></h2>
-  <p class="lead">Beaucoup de joysticks souffrent d'un yaw erratique : jitter, bruit au centre, oscillations imprévisibles causées par des potentiomètres usés. Yaw Rescue applique un traitement de signal pensé pour le vol, piloté depuis un smartphone en WiFi, sans rien installer côté téléphone.</p>
+  <h2 data-i18n="whyTitle">Pourquoi Yaw Rescue existe<span class="rule"></span></h2>
+  <p class="lead" data-i18n="whyLead">Beaucoup de joysticks souffrent d'un yaw erratique : jitter, bruit au centre, oscillations imprévisibles causées par des potentiomètres usés. Yaw Rescue applique un traitement de signal pensé pour le vol, piloté depuis un smartphone en WiFi, sans rien installer côté téléphone.</p>
 </section>
 
 <section>
-  <h2>Ce que Yaw Rescue corrige<span class="rule"></span></h2>
+  <h2 data-i18n="whatTitle">Ce que Yaw Rescue corrige<span class="rule"></span></h2>
   <div class="spec-table">
-    <div class="col-head">Symptôme observé</div>
-    <div class="col-head right">Traitement appliqué</div>
+    <div class="col-head" data-i18n="symptomHead">Symptôme observé</div>
+    <div class="col-head right" data-i18n="fixHead">Traitement appliqué</div>
 
-    <div class="spec-cell symptom">Mouvements de gouvernail erratiques</div>
-    <div class="spec-cell fix"><b>Lissage</b> du signal en continu</div>
+    <div class="spec-cell symptom" data-i18n="sym1">Mouvements de gouvernail erratiques</div>
+    <div class="spec-cell fix" data-i18n="fix1"><b>Lissage</b> du signal en continu</div>
 
-    <div class="spec-cell symptom">Oscillations rapides (jitter) dues à l'usure</div>
-    <div class="spec-cell fix"><b>Filtre anti-bruit</b> adaptatif</div>
+    <div class="spec-cell symptom" data-i18n="sym2">Oscillations rapides (jitter) dues à l'usure</div>
+    <div class="spec-cell fix" data-i18n="fix2"><b>Filtre anti-bruit</b> adaptatif</div>
 
-    <div class="spec-cell symptom">Dérive et bruit au centre du manche</div>
-    <div class="spec-cell fix"><b>Zone morte</b> centrale ajustable</div>
+    <div class="spec-cell symptom" data-i18n="sym3">Dérive et bruit au centre du manche</div>
+    <div class="spec-cell fix" data-i18n="fix3"><b>Zone morte</b> centrale ajustable</div>
 
-    <div class="spec-cell symptom">Virages mal coordonnés</div>
-    <div class="spec-cell fix"><b>Auto-coordination</b> du palonnier</div>
+    <div class="spec-cell symptom" data-i18n="sym4">Virages mal coordonnés</div>
+    <div class="spec-cell fix" data-i18n="fix4"><b>Auto-coordination</b> du palonnier</div>
 
-    <div class="spec-cell symptom">Sauts de yaw imprévisibles en vol</div>
-    <div class="spec-cell fix"><b>Yaw damper</b> logiciel</div>
+    <div class="spec-cell symptom" data-i18n="sym5">Sauts de yaw imprévisibles en vol</div>
+    <div class="spec-cell fix" data-i18n="fix5"><b>Yaw damper</b> logiciel</div>
   </div>
 </section>
 
 <section>
-  <h2>Fonctionnalités<span class="rule"></span></h2>
+  <h2 data-i18n="featuresTitle">Fonctionnalités<span class="rule"></span></h2>
   <dl class="feature-list">
     <div class="feature-row">
-      <dt>Interface mobile</dt>
-      <dd>Pilote les réglages depuis ton smartphone ou ta tablette, sans quitter le siège pilote.</dd>
+      <dt data-i18n="feat1t">Interface mobile</dt>
+      <dd data-i18n="feat1d">Pilote les réglages depuis ton smartphone ou ta tablette, sans quitter le siège pilote.</dd>
     </div>
     <div class="feature-row">
-      <dt>Trim universel</dt>
-      <dd>Ajuste le pitch, le roll et le yaw depuis un seul panneau, avec retour en temps réel.</dd>
+      <dt data-i18n="feat2t">Trim universel</dt>
+      <dd data-i18n="feat2d">Ajuste le pitch, le roll et le yaw depuis un seul panneau, avec retour en temps réel.</dd>
     </div>
     <div class="feature-row">
-      <dt>Contrôle des volets</dt>
-      <dd>Gère la position des volets directement depuis l'interface, sans repasser par le cockpit physique.</dd>
+      <dt data-i18n="feat3t">Contrôle des volets</dt>
+      <dd data-i18n="feat3d">Gère la position des volets directement depuis l'interface, sans repasser par le cockpit physique.</dd>
     </div>
     <div class="feature-row">
-      <dt>Profils par avion</dt>
-      <dd>Enregistre un réglage par appareil et recharge-le automatiquement au prochain vol.</dd>
+      <dt data-i18n="feat4t">Profils par avion</dt>
+      <dd data-i18n="feat4d">Enregistre un réglage par appareil et recharge-le automatiquement au prochain vol.</dd>
     </div>
     <div class="feature-row">
-      <dt>Connexion HTTPS + QR code</dt>
-      <dd>Connecte le téléphone en scannant un QR code, sur ton réseau local uniquement.</dd>
+      <dt data-i18n="feat5t">Connexion HTTPS + QR code</dt>
+      <dd data-i18n="feat5d">Connecte le téléphone en scannant un QR code, sur ton réseau local uniquement.</dd>
     </div>
   </dl>
 </section>
 
 <section>
-  <h2>Installation<span class="rule"></span></h2>
+  <h2 data-i18n="installTitle">Installation<span class="rule"></span></h2>
   <ol class="steps">
     <li>
       <span class="num">1</span>
-      <div class="step-title">Copier le dossier du plugin</div>
-      <p>Place le dossier <code>Yaw Rescue</code> dans ton répertoire FlyWithLua.</p>
+      <div class="step-title" data-i18n="inst1t">Copier le dossier du plugin</div>
+      <p data-i18n="inst1p">Place le dossier <code>Yaw Rescue</code> dans ton répertoire FlyWithLua.</p>
     </li>
     <li>
       <span class="num">2</span>
-      <div class="step-title">Ajouter le script</div>
-      <p>Copie <code>yaw_rescue.lua</code> dans le dossier <code>Scripts/</code>.</p>
+      <div class="step-title" data-i18n="inst2t">Ajouter le script</div>
+      <p data-i18n="inst2p">Copie <code>yaw_rescue.lua</code> dans le dossier <code>Scripts/</code>.</p>
     </li>
     <li>
       <span class="num">3</span>
-      <div class="step-title">Lancer le panneau de contrôle</div>
-      <p>Exécute <code>start_panel.bat</code> pour démarrer le serveur local.</p>
+      <div class="step-title" data-i18n="inst3t">Lancer le panneau de contrôle</div>
+      <p data-i18n="inst3p">Exécute <code>start_panel.bat</code> pour démarrer le serveur local.</p>
     </li>
     <li>
       <span class="num">4</span>
-      <div class="step-title">Connecter le smartphone</div>
-      <p>Scanne le QR code affiché pour ouvrir l'interface mobile sur ton réseau.</p>
+      <div class="step-title" data-i18n="inst4t">Connecter le smartphone</div>
+      <p data-i18n="inst4p">Scanne le QR code affiché pour ouvrir l'interface mobile sur ton réseau.</p>
     </li>
   </ol>
 </section>
 
 <section>
-  <h2>Soutenir Yaw Rescue<span class="rule"></span></h2>
+  <h2 data-i18n="supportTitle">Soutenir Yaw Rescue<span class="rule"></span></h2>
   <div class="support-row">
-    <p class="lead" style="margin:0;">Si Yaw Rescue a réparé ton joystick, un café aide à financer les prochaines versions.</p>
-    <a href="https://buymeacoffee.com/aerodevsystems" class="btn btn-primary">Offrir un café</a>
+    <p class="lead" style="margin:0;" data-i18n="supportLead">Si Yaw Rescue a réparé ton joystick, un café aide à financer les prochaines versions.</p>
+    <a href="https://buymeacoffee.com/aerodevsystems" class="btn btn-primary" data-i18n="supportCta">Offrir un café</a>
   </div>
 </section>
 
 </main>
 
 <footer>
-  <p>Yaw Rescue — développé par AeroDev Systems pour X-Plane 11/12. Tout reste sur ton réseau local.</p>
+  <p data-i18n="footerText">Yaw Rescue — développé par AeroDev Systems pour X-Plane 11/12. Tout reste sur ton réseau local.</p>
 </footer>
 
+<script>
+(function () {
+  "use strict";
+  var STORE_KEY = "yaw-rescue-lang";
+
+  var i18n = {
+    fr: {
+      docTitle: "Yaw Rescue – AeroDev Systems",
+      metaDesc: "Yaw Rescue corrige le yaw instable des joysticks pour X-Plane 11/12, piloté depuis un smartphone en WiFi.",
+      navSupport: "☕ Soutenir Yaw Rescue",
+      tagline: "Corrige le yaw instable de ton joystick, en temps réel, piloté depuis ton smartphone en WiFi.",
+      tag1: "X-Plane 11 / 12",
+      tag2: "FlyWithLua NXT",
+      tag3: "Python 3 + HTTPS",
+      tag4: "Interface mobile",
+      viewGitHub: "Voir sur GitHub",
+      hudChannel: "Canal yaw — entrée capteur",
+      hudRealtime: "temps réel",
+      hudRaw: "Signal brut",
+      hudOutput: "Sortie Yaw Rescue",
+      whyTitle: "Pourquoi Yaw Rescue existe<span class='rule'></span>",
+      whyLead: "Beaucoup de joysticks souffrent d’un yaw erratique : jitter, bruit au centre, oscillations imprévisibles causées par des potentiomètres usés. Yaw Rescue applique un traitement de signal pensé pour le vol, piloté depuis un smartphone en WiFi, sans rien installer côté téléphone.",
+      whatTitle: "Ce que Yaw Rescue corrige<span class='rule'></span>",
+      symptomHead: "Symptôme observé",
+      fixHead: "Traitement appliqué",
+      sym1: "Mouvements de gouvernail erratiques",
+      fix1: "<b>Lissage</b> du signal en continu",
+      sym2: "Oscillations rapides (jitter) dues à l’usure",
+      fix2: "<b>Filtre anti-bruit</b> adaptatif",
+      sym3: "Dérive et bruit au centre du manche",
+      fix3: "<b>Zone morte</b> centrale ajustable",
+      sym4: "Virages mal coordonnés",
+      fix4: "<b>Auto-coordination</b> du palonnier",
+      sym5: "Sauts de yaw imprévisibles en vol",
+      fix5: "<b>Yaw damper</b> logiciel",
+      featuresTitle: "Fonctionnalités<span class='rule'></span>",
+      feat1t: "Interface mobile",
+      feat1d: "Pilote les réglages depuis ton smartphone ou ta tablette, sans quitter le siège pilote.",
+      feat2t: "Trim universel",
+      feat2d: "Ajuste le pitch, le roll et le yaw depuis un seul panneau, avec retour en temps réel.",
+      feat3t: "Contrôle des volets",
+      feat3d: "Gère la position des volets directement depuis l’interface, sans repasser par le cockpit physique.",
+      feat4t: "Profils par avion",
+      feat4d: "Enregistre un réglage par appareil et recharge-le automatiquement au prochain vol.",
+      feat5t: "Connexion HTTPS + QR code",
+      feat5d: "Connecte le téléphone en scannant un QR code, sur ton réseau local uniquement.",
+      installTitle: "Installation<span class='rule'></span>",
+      inst1t: "Copier le dossier du plugin",
+      inst1p: "Place le dossier <code>Yaw Rescue</code> dans ton répertoire FlyWithLua.",
+      inst2t: "Ajouter le script",
+      inst2p: "Copie <code>yaw_rescue.lua</code> dans le dossier <code>Scripts/</code>.",
+      inst3t: "Lancer le panneau de contrôle",
+      inst3p: "Exécute <code>start_panel.bat</code> pour démarrer le serveur local.",
+      inst4t: "Connecter le smartphone",
+      inst4p: "Scanne le QR code affiché pour ouvrir l’interface mobile sur ton réseau.",
+      supportTitle: "Soutenir Yaw Rescue<span class='rule'></span>",
+      supportLead: "Si Yaw Rescue a réparé ton joystick, un café aide à financer les prochaines versions.",
+      supportCta: "Offrir un café",
+      footerText: "Yaw Rescue — développé par AeroDev Systems pour X-Plane 11/12. Tout reste sur ton réseau local."
+    },
+    en: {
+      docTitle: "Yaw Rescue – AeroDev Systems",
+      metaDesc: "Yaw Rescue fixes unstable yaw on joysticks for X-Plane 11/12, controlled from a smartphone over WiFi.",
+      navSupport: "☕ Support Yaw Rescue",
+      tagline: "Fixes your joystick’s unstable yaw in real time, controlled from your smartphone over WiFi.",
+      tag1: "X-Plane 11 / 12",
+      tag2: "FlyWithLua NXT",
+      tag3: "Python 3 + HTTPS",
+      tag4: "Mobile interface",
+      viewGitHub: "View on GitHub",
+      hudChannel: "Yaw channel — sensor input",
+      hudRealtime: "real time",
+      hudRaw: "Raw signal",
+      hudOutput: "Yaw Rescue output",
+      whyTitle: "Why Yaw Rescue exists<span class='rule'></span>",
+      whyLead: "Many joysticks suffer from erratic yaw: jitter, noise at center, unpredictable oscillations caused by worn potentiometers. Yaw Rescue applies signal processing designed for flight, controlled from a smartphone over WiFi — nothing to install on the phone.",
+      whatTitle: "What Yaw Rescue fixes<span class='rule'></span>",
+      symptomHead: "Observed symptom",
+      fixHead: "Applied fix",
+      sym1: "Erratic rudder movements",
+      fix1: "<b>Smoothing</b> of the signal, applied continuously",
+      sym2: "Rapid oscillations (jitter) caused by wear",
+      fix2: "<b>Adaptive noise filter</b>",
+      sym3: "Drift and noise at stick center",
+      fix3: "<b>Adjustable dead zone</b> at center",
+      sym4: "Poorly coordinated turns",
+      fix4: "<b>Rudder auto-coordination</b>",
+      sym5: "Unpredictable yaw jumps in flight",
+      fix5: "<b>Software yaw damper</b>",
+      featuresTitle: "Features<span class='rule'></span>",
+      feat1t: "Mobile interface",
+      feat1d: "Tune the settings from your smartphone or tablet without leaving the pilot’s seat.",
+      feat2t: "Universal trim",
+      feat2d: "Adjust pitch, roll and yaw from a single panel, with real-time feedback.",
+      feat3t: "Flap control",
+      feat3d: "Control flap position directly from the interface, without going back to the physical cockpit.",
+      feat4t: "Per-aircraft profiles",
+      feat4d: "Save one profile per aircraft and have it reloaded automatically on the next flight.",
+      feat5t: "HTTPS + QR code connection",
+      feat5d: "Connect your phone by scanning a QR code — on your local network only.",
+      installTitle: "Installation<span class='rule'></span>",
+      inst1t: "Copy the plugin folder",
+      inst1p: "Put the <code>Yaw Rescue</code> folder into your FlyWithLua directory.",
+      inst2t: "Add the script",
+      inst2p: "Copy <code>yaw_rescue.lua</code> into the <code>Scripts/</code> folder.",
+      inst3t: "Launch the control panel",
+      inst3p: "Run <code>start_panel.bat</code> to start the local server.",
+      inst4t: "Connect your smartphone",
+      inst4p: "Scan the QR code shown to open the mobile interface on your network.",
+      supportTitle: "Support Yaw Rescue<span class='rule'></span>",
+      supportLead: "If Yaw Rescue fixed your joystick, buying a coffee helps fund the next versions.",
+      supportCta: "Buy me a coffee",
+      footerText: "Yaw Rescue — developed by AeroDev Systems for X-Plane 11/12. Everything stays on your local network."
+    }
+  };
+
+  function storedLang() {
+    try {
+      var v = window.localStorage.getItem(STORE_KEY);
+      if (v === "fr" || v === "en") { return v; }
+    } catch (e) {}
+    return "fr";
+  }
+
+  function applyLang(lang) {
+    var dict = i18n[lang];
+    if (!dict) { return; }
+    var els = document.querySelectorAll("[data-i18n]");
+    for (var i = 0; i < els.length; i++) {
+      var el = els[i];
+      var key = el.getAttribute("data-i18n");
+      var txt = dict[key];
+      if (txt === undefined) { continue; }
+      var attr = el.getAttribute("data-i18n-attr");
+      if (attr) {
+        el.setAttribute(attr, txt);
+      } else {
+        el.innerHTML = txt;
+      }
+    }
+    document.documentElement.lang = lang;
+    var btns = document.querySelectorAll(".lang-btn");
+    for (var j = 0; j < btns.length; j++) {
+      var on = btns[j].getAttribute("data-lang") === lang;
+      btns[j].classList.toggle("active", on);
+      btns[j].setAttribute("aria-pressed", on ? "true" : "false");
+    }
+    try { window.localStorage.setItem(STORE_KEY, lang); } catch (e) {}
+  }
+
+  var toggles = document.querySelectorAll(".lang-btn");
+  for (var k = 0; k < toggles.length; k++) {
+    toggles[k].addEventListener("click", (function (btn) {
+      return function () { applyLang(btn.getAttribute("data-lang")); };
+    })(toggles[k]));
+  }
+
+  applyLang(storedLang());
+})();
+</script>
 </body>
 </html>
