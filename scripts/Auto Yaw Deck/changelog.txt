@@ -1,0 +1,183 @@
+================================================================================
+  YAW RESCUE - CHANGELOG
+================================================================================
+
+v1.2.0 - Update: flight vitals around the compass (gear, RPM/THR,
+         FPM/AOA), flap retract alert, smarter launcher,
+         remembered tab
+--------------------------------------------------
+
+  HIGHLIGHTS
+  ----------
+
+  1. FLIGHT VITALS AROUND THE COMPASS (NEW)
+     - New dedicated displays integrated around the compass, fed by new
+       datarefs streamed from X-Plane:
+         - Landing gear strip ABOVE the compass: one cell per gear
+           (N / L / R), each showing DN / UP / MID live.
+         - Engine RPM and Throttle on the LEFT of the compass.
+         - Vertical speed (FPM) and Angle of Attack (AOA) on the RIGHT
+           of the compass.
+     - Every value is color-coded interactively so a glance is enough:
+         - Gear: DN green, MID orange, UP red.
+         - RPM: green when the engine runs, dimmed when off.
+         - Throttle: 0-70% green, 70-90% orange, above 90% red.
+         - FPM: green above -400, orange from -400 to -1,000,
+           red beyond (fast descent).
+         - AOA: green below 12 degrees, orange 12-16 (stall approach),
+           red above 16.
+     - Landing-config alert: the whole gear strip flashes with a red
+       glow when any gear is not fully down below 1,000 ft altitude,
+       or when the flap retract alert is active.
+     - Multi-engine aircraft: RPM and throttle show the highest value
+       across all engines.
+
+  2. FLAP RETRACT ALERT — TIME TO RAISE THE FLAPS
+     - X-Plane exposes the aircraft's max flap-extended speed
+       (sim/aircraft/view/acf_Vfe). When the airspeed reaches Vfe while
+       the flaps are still extended (above 2%), the Volets section now
+       signals that it is time to retract them.
+     - Hysteresis (alert turns off 5 kt below Vfe) prevents flickering
+       near the threshold.
+     - On the phone, the whole Volets card pulses with a red border and
+       halo, and the header position badge flashes red/white with a
+       scale pulse — visible even when the section is collapsed.
+
+  3. SMARTER WINDOWS LAUNCHER (start_panel.bat)
+     - Auto-detects a working Python interpreter: tries py -3, then
+       python, then python3, each actually version-checked (3.7+), so a
+       broken install or a Microsoft Store stub is skipped.
+     - Clear, actionable error messages with fix instructions when
+       Python, tkinter or the folder files are missing.
+     - Warns when port 8443 is already in use (another instance may be
+       running - just scan its QR code), unless a custom --port is used.
+     - Keeps the console window open on failure so the error is visible,
+       and reminds users to look for the "Yaw Rescue" window (the
+       console minimizing is normal).
+
+  4. REMEMBERED ACTIVE TAB
+     - The tab you leave open (Config / Controls / Telemetry) is now
+       saved per device and restored when you come back to the page.
+     - Tab highlighting is now language-independent (fixed a bug where
+       the active button was not highlighted in the English interface).
+
+
+  DETAILED CHANGES
+  ----------------
+
+  FLIGHT VITALS
+    - New Lua datarefs written to state.txt by auto_yaw_deck.lua:
+        gear_nose / gear_left / gear_right
+            (sim/flightmodel2/gear/deploy_ratio)
+        rpm        (sim/cockpit2/engine/indicators/engine_speed_rpm)
+        throttle   (sim/flightmodel/engine/ENGN_thro)
+        vspd_fpm   (sim/flightmodel/position/vh_ind_fpm)
+        alpha_deg  (sim/flightmodel/position/alpha, already in degrees)
+    - New web module static/vitals.js renders the gear strip above the
+      compass and the four side values; style.css adds the layout and
+      the color/alert styles; ui.js hooks updateVitals into the polling
+      loop; server.py serves the new state keys.
+
+  FLAP RETRACT ALERT
+    - auto_yaw_deck.lua computes the alert (Vfe vs airspeed, 5 kt
+      hysteresis) and writes flap_alert + flap_vfe to state.txt.
+    - style.css adds two animations: a pulsing red glow on the Volets
+      card and a flashing, scaling position badge.
+
+  SMART LAUNCHER
+    - start_panel.bat rewritten: Python auto-detection (py -3 / python /
+      python3 with version check), tkinter pre-check, port-8443-in-use
+      warning, per-case help messages, and a pause on any failure so the
+      error stays readable.
+
+  REMEMBERED TAB
+    - switchTab() saves the active tab to localStorage ('ayd-tab');
+      main.js restores it on page load (validated against the three
+      tabs).
+    - Tab buttons are matched via data-tab attributes instead of
+      translated button text.
+
+  COMPATIBILITY
+  -------------
+  - X-Plane 11 / 12 (Windows, macOS, Linux)
+  - Resume-at-last-airport requires X-Plane 12.4+
+  - FlyWithLua NXT, Python 3.7+ (packages auto-installed on first run)
+  - The Lua changes require an X-Plane restart (or a FlyWithLua script
+    reload) to start streaming the new fields.
+
+===============================================================================
+
+v1.1.0 - Update: resume at last airport, reworked flaps section,
+         persistent language preference
+--------------------------------------------------
+
+  HIGHLIGHTS
+  ----------
+
+  1. RESUME DIRECTLY AT YOUR LAST AIRPORT
+     - The control panel reads the last airport you flew from (and its
+       runway) straight from X-Plane's own data (Freeflight.prf, with
+       log.txt as fallback).
+     - One click on "Start X-Plane" and the sim loads directly at that
+       airport, with your last aircraft — no menus, no selection screens.
+     - Optional: uncheck "Resume at last airport" to start on the
+       default location instead.
+     - Requires X-Plane 12.4+ (uses the official --new_flight_json
+       launch argument). On older versions the panel simply starts
+       X-Plane normally.
+
+  2. REWORKED FLAPS (VOLETS) SECTION
+     - The flaps section now sits ABOVE the trim section, with a compact
+       inline diagram that takes much less space.
+     - The whole section is retractable: tap the "Volets" header to fold
+       or unfold it. Your choice is remembered on each device.
+     - A live position badge in the header shows the current flap setting
+       (e.g. "50%"), color-coded by deployment:
+         0% green  ->  partial orange  ->  fully deployed red
+     - The preset buttons (0% / 1/3 / 2/3 / Full) now automatically
+       highlight the one closest to the current flap position, so you
+       always see where the flaps are at a glance.
+
+  3. LANGUAGE PREFERENCE REMEMBERED
+     - Your FR/EN choice is now saved on the PC (data/prefs.json), so it
+       survives X-Plane restarts, IP address changes, and is shared by
+       every device connecting to the panel — not just your browser.
+
+  4. MAINTENANCE
+     - Web app code reorganized into focused modules (no functional
+       change, easier to maintain).
+     - Fixed a certificate-generation syntax error that could prevent
+       a fresh start of the server.
+
+
+  DETAILED CHANGES
+  ----------------
+
+  RESUME AT LAST AIRPORT
+    - panel.py detects the last airport from:
+        1. Output/preferences/Freeflight.prf (_last_start / _airport)
+        2. log.txt (last "I/FLT: Init ... apt:XXXX" line)
+    - The panel displays it, e.g.: "Last airport: LFMN (Runway 22R)".
+    - "Start X-Plane" writes data/flight.json (airport + runway + last
+      aircraft) and launches:
+        X-Plane.exe --new_flight_json=data/flight.json
+    - Works on Windows / macOS / Linux (same launch mechanism).
+
+  FLAPS SECTION
+    - Moved above the trim card in the Controls tab.
+    - Compact diagram: smaller icon, icon + label side by side.
+    - Retractable card (collapsible-header), state saved in localStorage.
+    - Header badge with color coding (green / orange / red).
+    - Preset buttons auto-highlight the nearest position (live).
+
+  LANGUAGE
+    - New GET/POST /api/prefs endpoints, persisted in data/prefs.json.
+    - Web interface restores the saved language on every page load.
+
+  COMPATIBILITY
+  -------------
+  - X-Plane 11 / 12 (Windows, macOS, Linux)
+  - Resume-at-last-airport requires X-Plane 12.4+
+  - FlyWithLua NXT, Python 3.7+ (packages auto-installed on first run)
+
+================================================================================

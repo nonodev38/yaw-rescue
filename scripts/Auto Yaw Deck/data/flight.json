@@ -1,0 +1,9 @@
+{
+  "runway_start": {
+    "airport_id": "LFMN",
+    "runway": "22R"
+  },
+  "aircraft": {
+    "path": "Aircraft/Laminar Research/Cessna 172 SP/Cessna_172SP.acf"
+  }
+}
