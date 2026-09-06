@@ -1,0 +1,2 @@
+set rudder_trim 0.41
+set elevator_trim 0.66
