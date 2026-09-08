@@ -1,0 +1,110 @@
+/* ---- Responsive ---- */
+@media (max-width: 480px) {
+    .telemetry-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .app-content {
+        padding: 0.5rem;
+    }
+
+    .connection-card {
+        padding: 2rem 1.5rem;
+    }
+
+    .compass-row {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .compass-side {
+        max-width: 90px;
+    }
+
+    .compass-side.telemetry-extra {
+        max-width: 80px;
+    }
+
+    .side-value {
+        font-size: 1.1rem;
+    }
+
+    .compass-heading {
+        font-size: 1.5rem;
+    }
+
+    .compass-heading::after {
+        font-size: 0.9rem;
+    }
+
+    .gear-cell {
+        padding: 0.4rem 0.2rem;
+    }
+
+    .gear-cell .gear-value {
+        font-size: 1.1rem;
+    }
+
+    .gear-cell .gear-label {
+        font-size: 0.6rem;
+    }
+
+    .telemetry-item .value {
+        font-size: 1.5rem;
+    }
+}
+
+/* ---- Scrollbar ---- */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 3px;
+}
+
+/* ---- Tab bar ---- */
+.tab-bar {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg-secondary);
+    padding: 0 0.5rem;
+    overflow-x: auto;
+}
+
+.tab-btn {
+    padding: 0.6rem 1rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    border: none;
+    background: none;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+}
+
+.tab-btn:hover {
+    color: var(--text-secondary);
+}
+
+.tab-btn.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+

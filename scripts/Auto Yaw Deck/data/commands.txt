@@ -1,0 +1,2 @@
+set flap_ratio 0.32
+set flap_ratio 0.5

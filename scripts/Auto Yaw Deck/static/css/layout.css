@@ -1,0 +1,383 @@
+/* ---- Privacy badge ---- */
+.privacy-badge {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    background: rgba(34, 197, 94, 0.08);
+    border: 1px solid rgba(34, 197, 94, 0.2);
+    border-radius: 10px;
+    padding: 0.65rem 0.85rem;
+    margin-top: 1rem;
+    font-size: 0.72rem;
+    color: var(--success);
+    line-height: 1.45;
+}
+
+.privacy-icon {
+    font-size: 0.9rem;
+    flex-shrink: 0;
+    margin-top: 0.05rem;
+}
+
+/* ---- Enter button ---- */
+.btn-enter {
+    transition: all 0.3s ease;
+}
+
+.btn-enter.active-sim {
+    background: rgba(34, 197, 94, 0.15);
+    border-color: var(--success);
+    color: var(--success);
+    box-shadow: 0 0 12px var(--success-glow);
+}
+
+.btn-enter.inactive-sim {
+    background: var(--bg-secondary);
+    border-color: var(--border);
+    color: var(--text-muted);
+    animation: pulse-warn 2s ease-in-out infinite;
+}
+
+@keyframes pulse-warn {
+    0%, 100% { border-color: var(--border); box-shadow: none; }
+    50% { border-color: var(--warning); box-shadow: 0 0 8px rgba(245, 158, 11, 0.25); }
+}
+
+.btn-launch {
+    background: rgba(59, 130, 246, 0.15);
+    border-color: var(--accent);
+    color: var(--accent);
+    transition: all 0.3s ease;
+}
+.btn-launch:hover:not(:disabled) {
+    background: rgba(59, 130, 246, 0.25);
+    box-shadow: 0 0 12px rgba(59, 130, 246, 0.3);
+}
+.btn-launch:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* ---- Connection Page ---- */
+#connection-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 2rem;
+    text-align: center;
+}
+
+.connection-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 3rem;
+    max-width: 420px;
+    width: 100%;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.connection-card h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, var(--accent), var(--info));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.connection-card .subtitle:first-of-type {
+    color: var(--warning);
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    margin-bottom: 0.4rem;
+    text-shadow: 0 0 20px rgba(245, 158, 11, 0.25);
+}
+
+.yaw-highlight {
+    color: var(--accent);
+    font-size: 1.5rem;
+    text-shadow: 0 0 12px rgba(59, 130, 246, 0.4);
+    letter-spacing: 0.08em;
+}
+
+.connection-card .subtitle {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    margin-bottom: 2rem;
+}
+
+.qr-container {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin: 1.5rem auto;
+    width: fit-content;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+.qr-container canvas,
+.qr-container img {
+    display: block;
+}
+
+.url-display {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    font-family: 'Cascadia Code', 'Fira Code', monospace;
+    font-size: 0.8rem;
+    color: var(--info);
+    margin: 1rem 0;
+    word-break: break-all;
+    user-select: all;
+}
+
+.connection-status {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-top: 1.5rem;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--danger);
+}
+
+.status-dot.connected {
+    background: var(--success);
+    box-shadow: 0 0 8px var(--success-glow);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+/* ---- Main App ---- */
+#app-page {
+    display: none;
+    min-height: 100vh;
+}
+
+.app-header {
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(8px);
+}
+
+.app-header h1 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.app-header .status-badge {
+    font-size: 0.7rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    font-weight: 500;
+}
+
+.app-header .status-badge.live {
+    background: rgba(34, 197, 94, 0.15);
+    color: var(--success);
+    border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.app-header .status-badge.offline {
+    background: rgba(239, 68, 68, 0.15);
+    color: var(--danger);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.app-header .status-badge.waiting {
+    background: rgba(245, 158, 11, 0.15);
+    color: var(--warning);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.app-header .status-badge.loading {
+    background: rgba(99, 102, 241, 0.15);
+    color: #818cf8;
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    animation: pulse-loading 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse-loading {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+}
+
+.status-dot.loading {
+    background: #818cf8;
+    animation: pulse-loading 1.5s ease-in-out infinite;
+}
+
+.app-content {
+    padding: 1rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* ---- Cards ---- */
+.card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 1rem;
+    overflow: hidden;
+}
+
+.card-header {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-secondary);
+}
+
+.card-header .icon {
+    font-size: 1rem;
+}
+
+.card-body {
+    padding: 1rem;
+}
+
+/* Collapsible cards — tap the header to fold/unfold the section */
+.collapsible-header {
+    cursor: pointer;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.collapsible-header:hover {
+    color: var(--text);
+}
+
+.collapse-chevron {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    margin-left: 0.5rem;
+    transition: transform 0.2s ease;
+}
+
+.collapsible.collapsed .collapse-chevron {
+    transform: rotate(-90deg);
+}
+
+.collapsible.collapsed .collapsible-body {
+    display: none;
+}
+
+/* Flap position badge in the Volets header — color follows the graduation:
+   0% green (retracted), partial orange, fully deployed red */
+.flap-pos-badge {
+    font-size: 0.65rem;
+    font-weight: 700;
+    font-family: 'Cascadia Code', monospace;
+    margin-left: 0.5rem;
+    padding: 0.1rem 0.4rem;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.06);
+    transition: color 0.2s ease;
+}
+
+.flap-pos-badge.ok   { color: var(--success); }
+.flap-pos-badge.warn { color: var(--warning); }
+.flap-pos-badge.hot  { color: #f97316; }
+.flap-pos-badge.max  { color: var(--danger); }
+
+/* Flap retract alert — the Volets section glows and the position badge
+   flashes when it's time to raise the flaps (speed at/beyond Vfe) */
+@keyframes flap-alert-glow {
+    0%, 100% { border-color: var(--border); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+    50%      { border-color: var(--danger); box-shadow: 0 0 16px 3px rgba(239, 68, 68, 0.5); }
+}
+
+@keyframes flap-alert-flash {
+    0%, 100% { color: var(--danger); transform: scale(1); }
+    50%      { color: #fff; transform: scale(1.12); }
+}
+
+#card-flaps.flap-alert {
+    animation: flap-alert-glow 1s ease-in-out infinite;
+}
+
+#card-flaps.flap-alert .flap-pos-badge {
+    animation: flap-alert-flash 0.6s ease-in-out infinite;
+    background: rgba(239, 68, 68, 0.18);
+}
+
+/* ---- Telemetry Grid ---- */
+.telemetry-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 0.75rem;
+}
+
+.telemetry-item {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.75rem;
+    text-align: center;
+}
+
+.telemetry-item .label {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    margin-bottom: 0.35rem;
+}
+
+.telemetry-item .value {
+    font-size: 2rem;
+    font-weight: 700;
+    font-family: 'Cascadia Code', 'Fira Code', monospace;
+    color: var(--text-primary);
+}
+
+.telemetry-item .unit {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: 0.15rem;
+}
+
+.telemetry-item.highlight .value {
+    color: var(--info);
+}
+
+.telemetry-item.warning .value {
+    color: var(--warning);
+}
+
