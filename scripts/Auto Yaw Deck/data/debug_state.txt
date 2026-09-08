@@ -1,8 +1,0 @@
-time=09:27:21
-xplane_active=false
-xplane_state=off
-timestamp_state=1788852424
-timestamp_age=17.5s
-process_running=False
-log_loading=False
-log_recently_modified=True
